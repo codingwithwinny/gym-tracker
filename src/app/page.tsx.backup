@@ -13,18 +13,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { DataModel } from "@/lib/types";
 import { STORAGE_KEY, defaultExercises } from "@/lib/utils";
 import { Settings, BarChart3, Calendar, Database } from "lucide-react";
-// Service Worker Registration
-if (typeof window !== "undefined" && "serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/sw.js")
-      .then((registration) => {
-        console.log("SW registered: ", registration);
-      })
-      .catch((registrationError) => {
-        console.log("SW registration failed: ", registrationError);
-      });
-  });
-}
 
 // -------------------- Main App --------------------
 

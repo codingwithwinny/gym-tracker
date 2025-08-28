@@ -2,8 +2,6 @@
 
 import React from "react";
 
-type Option = { value: string; label?: string };
-
 type SelectRootProps = {
   value: string;
   onValueChange: (v: string) => void;

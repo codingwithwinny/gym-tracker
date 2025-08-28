@@ -1,3 +1,7 @@
+# LiftLog - Gym Progress Tracker
+
+A modern, responsive gym tracking application built with Next.js, TypeScript, and Firebase.
+
 ## Firebase setup
 
 1. Create a Firebase project and enable Google Sign-In (Authentication → Sign-in method → Google → Enable).

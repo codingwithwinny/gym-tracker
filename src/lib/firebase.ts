@@ -7,6 +7,14 @@ import {
   onAuthStateChanged,
   type User,
 } from "firebase/auth";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  onSnapshot,
+  type DocumentData,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -29,6 +37,11 @@ export function getFirebaseAuth() {
   return getAuth(app);
 }
 
+export function getFirestoreDB() {
+  const app = getFirebaseApp();
+  return getFirestore(app);
+}
+
 export async function signInWithGoogle() {
   const auth = getFirebaseAuth();
   const provider = new GoogleAuthProvider();
@@ -43,4 +56,34 @@ export async function signOutFirebase() {
 export function observeAuth(callback: (user: User | null) => void) {
   const auth = getFirebaseAuth();
   return onAuthStateChanged(auth, callback);
+}
+
+// Firestore data operations
+export async function saveUserData(userId: string, data: DocumentData) {
+  const db = getFirestoreDB();
+  const userDoc = doc(db, "users", userId);
+  await setDoc(userDoc, { data, updatedAt: new Date() });
+}
+
+export async function loadUserData(userId: string): Promise<DocumentData | null> {
+  const db = getFirestoreDB();
+  const userDoc = doc(db, "users", userId);
+  const docSnap = await getDoc(userDoc);
+  
+  if (docSnap.exists()) {
+    return docSnap.data().data;
+  }
+  return null;
+}
+
+export function observeUserData(userId: string, callback: (data: DocumentData | null) => void) {
+  const db = getFirestoreDB();
+  const userDoc = doc(db, "users", userId);
+  return onSnapshot(userDoc, (doc) => {
+    if (doc.exists()) {
+      callback(doc.data().data);
+    } else {
+      callback(null);
+    }
+  });
 }
