@@ -8,6 +8,7 @@ import ExercisesTab from "@/components/tracker/ExercisesTab";
 import SettingsTab from "@/components/tracker/SettingsTab";
 import BackupRestore from "@/components/tracker/BackupRestore";
 import DevTests from "@/components/tracker/DevTests";
+import AuthGate from "@/components/tracker/AuthGate";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { DataModel } from "@/lib/types";
 import { STORAGE_KEY, defaultExercises } from "@/lib/utils";
@@ -72,7 +73,8 @@ export default function App() {
           <h1 className="text-2xl md:text-3xl font-semibold tracking-tight text-slate-900">
             Universal Gym Progress Tracker
           </h1>
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
+            <AuthGate />
             <BackupRestore data={data} setData={setData} />
           </div>
         </header>
